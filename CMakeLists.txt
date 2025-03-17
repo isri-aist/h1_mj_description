@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.1)
+
+project(h1_mj_description VERSION 1.0.0)
+
+find_package(mc_mujoco REQUIRED)
+
+option(SRC_MODE "Use files in the repository instead of installed files" OFF)
+
+set(H1_XML_MODEL_PATH "xml/h1.xml")
+set(H1_PDGAINS_PATH "pdgains/PDgains_sim.dat")
+
+if(SRC_MODE)
+  set(H1_XML_MODEL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/${H1_XML_MODEL_PATH}")
+  set(H1_PDGAINS_PATH "${CMAKE_CURRENT_SOURCE_DIR}/${H1_PDGAINS_PATH}")
+else()
+  set(H1_XML_MODEL_PATH "${MC_MUJOCO_SHARE_DESTINATION}/H1/${H1_XML_MODEL_PATH}")
+  set(H1_PDGAINS_PATH "${MC_MUJOCO_SHARE_DESTINATION}/H1/${H1_PDGAINS_PATH}")
+endif()
+
+configure_file(mc_mujoco/h1.in.yaml "${CMAKE_CURRENT_BINARY_DIR}/mc_mujoco/h1.yaml")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/mc_mujoco/h1.yaml" DESTINATION "${MC_MUJOCO_SHARE_DESTINATION}")
+
+install(DIRECTORY meshes DESTINATION "${MC_MUJOCO_SHARE_DESTINATION}/H1" FILES_MATCHING PATTERN "*.stl")
+install(DIRECTORY pdgains DESTINATION "${MC_MUJOCO_SHARE_DESTINATION}/H1" FILES_MATCHING PATTERN "*.dat")
+install(DIRECTORY xml DESTINATION "${MC_MUJOCO_SHARE_DESTINATION}/H1" FILES_MATCHING PATTERN "*.xml")
