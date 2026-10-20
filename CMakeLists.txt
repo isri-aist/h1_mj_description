@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(h1_mj_description VERSION 1.0.0)
+project(h1_mj_description VERSION 1.1.0)
 
 option(HONOR_INSTALL_PREFIX "Whether to install in CMAKE_INSTALL_PREFIX (for nix)" OFF)
 option(SRC_MODE "Use files in the repository instead of installed files" OFF)
